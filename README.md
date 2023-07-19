@@ -13,6 +13,9 @@ Right now we are using [rclone](https://rclone.org/) to mount a remote file syst
 In the future this same container could be adapted to use
  [Alluxio](https://www.alluxio.io/) or any other storage solution we decide to support.
 
+ The image is available in [Dockerhub](https://hub.docker.com/r/ignacioheredia/ai4-docker-storage).
+ <!-- TODO: move to ai4os Dockerhub account -->
+
 ## Usage
 
 When launching this Dockerfile you should pass appropriate RCLONE
@@ -39,11 +42,11 @@ docker run \
 --device /dev/fuse \
 --cap-add SYS_ADMIN \
 --security-opt apparmor:unconfined \
--ti storage-test /bin/bash
+-ti ignacioheredia/ai4-docker-storage /bin/bash
 ```
 
 In the example above the RCLONE mounted dir will be accessed in the host machine at
-`/home/iheredia/demo-data`.
+`/home/iheredia/demo-data` (root permissions needed to access).
 
 ## Implementation notes
 
