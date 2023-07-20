@@ -48,6 +48,12 @@ docker run \
 In the example above the RCLONE mounted dir will be accessed in the host machine at
 `/home/iheredia/demo-data` (root permissions needed to access).
 
+After exiting the container, you will need to unmount the folder:
+```bash
+umount /home/iheredia/demo-data
+rmdir /home/iheredia/demo-data
+```
+
 ## Implementation notes
 
 **RCLONE version** \
@@ -57,3 +63,21 @@ We settled with (`1.62.2`).
 **Base image** \
 We do not start from official RCLONE images because we also need `[sh|bash|curl]` (not
 provided)
+
+**Nomad task**
+* If the user inputs the wrong USER/PASS, the job still runs fine.
+  Only when trying to access the storage folder from his task they will see:
+  ```bash
+  `ls: reading directory '/storage/': Input/output error`
+  ```
+* the `rclone mount` command never finishes so the job can still be run _in principle_ as type `service`. But the docker start will fail the second time (at restart) because the volume folder has already been created.
+
+  ```bash
+  Error while creating mount source path '/etc/nomad.d/storage/some-random-uuid5': mkdir /etc/nomad.d/storage/some-random-uuid5: file exists
+  ```
+
+  So we need to either:
+    - use `allow_other` in RCLONE ([ref](https://stackoverflow.com/a/61686833/18471590)), still with `service` mode.
+    - run it in `batch` mode (this means suboptimal placement).
+
+  We choose the first option.
