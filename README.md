@@ -70,6 +70,7 @@ provided)
   ```bash
   `ls: reading directory '/storage/': Input/output error`
   ```
+  When the job finishes, you still need to unmount the folder before deleting.
 * the `rclone mount` command never finishes so the job can still be run _in principle_ as type `service`. But the docker start will fail the second time (at restart) because the volume folder has already been created.
 
   ```bash
