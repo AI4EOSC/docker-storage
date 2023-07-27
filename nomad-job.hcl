@@ -44,7 +44,7 @@ job "userjob-jlab-storage-mount" {
         //   "apparmor:unconfined"
         // ]
         volumes = [
-          "/etc/nomad.d/storage/some-random-uuid:/storage:shared",
+          "/nomad-storage/some-random-uuid:/storage:shared",
         ]
       }
 
@@ -79,7 +79,7 @@ job "userjob-jlab-storage-mount" {
         args    = ["--jupyter"]
         ports   = ["jupyter"]
         volumes = [
-          "/etc/nomad.d/storage/some-random-uuid:/storage:shared",
+          "/nomad-storage/some-random-uuid:/storage:shared",
         ]
       }
 
@@ -106,7 +106,7 @@ job "userjob-jlab-storage-mount" {
 
       config {
         command = "/bin/bash"
-        args = ["-c", "sudo umount /etc/nomad.d/storage/some-random-uuid && sudo rmdir /etc/nomad.d/storage/some-random-uuid" ]
+        args = ["-c", "sudo umount /nomad-storage/some-random-uuid && sudo rmdir /nomad-storage/some-random-uuid" ]
 
       }
     }
