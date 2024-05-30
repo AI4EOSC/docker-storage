@@ -4,17 +4,18 @@
 
 # Storage container
 
+[![Build image](https://github.com/ai4os/docker-storage/actions/workflows/build-docker.yml/badge.svg)](https://github.com/ai4os/docker-storage/actions/workflows/build-docker.yml)
+
 This is the container that will be deployed as a side task (`storagetask`) in a
-[Nomad job](https://github.com/AI4EOSC/ai4-papi/tree/master/etc).
-<!-- #todo: update link -->
+[Nomad job](https://github.com/ai4os/ai4-papi/blob/master/etc/modules/nomad.hcl).
 
 Right now we are using [rclone](https://rclone.org/) to mount a remote file system
 (therefore `privileged` permissions, or similar, are needed in the Nomad task).
 In the future this same container could be adapted to use
  [Alluxio](https://www.alluxio.io/) or any other storage solution we decide to support.
 
- The image is available in [Dockerhub](https://hub.docker.com/r/ignacioheredia/ai4-docker-storage).
- <!-- TODO: move to ai4os Dockerhub account -->
+ The Docker image is available in the project's Harbor registry:
+ * `registry.services.ai4os.eu/ai4os/docker-storage:latest`
 
 ## Usage
 
@@ -22,7 +23,7 @@ When launching this Dockerfile you should pass appropriate RCLONE
 configuration as ENV variables as well as mounting a volume in the
 provided LOCAL_PATH
 
-> :warning: If several containers are using that volume, this container has to be ran first.
+> ⚠️ If several containers are using that volume, this container has to be ran first.
 
 Mounting a remote filesystem requires either `privileged` flag or set of little more
 restrictive permissions [cap-add|device|security-opt]
