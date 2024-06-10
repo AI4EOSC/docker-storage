@@ -28,6 +28,6 @@ ENV LOCAL_PATH  "/storage"
 
 # At **runtime** we need to both obscure the rclone password AND run rclone mount
 # We execute both of these steps in `mount_storage.sh` script.
-RUN curl -O https://raw.githubusercontent.com/AI4EOSC/docker-storage/master/mount_storage.sh
+COPY mount_storage.sh .
 
 CMD sh ./mount_storage.sh
