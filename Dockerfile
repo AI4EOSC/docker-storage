@@ -10,9 +10,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
          # https://github.com/rclone/rclone/issues/6844
     && rm -rf /var/lib/apt/lists/*
 
-# Install rclone
-RUN curl -O https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.deb \
-    && apt install ./rclone-v1.62.2-linux-amd64.deb
+# Install latest rclone
+RUN curl https://rclone.org/install.sh | bash
 
 # RCLONE authentication details
 ENV RCLONE_CONFIG               ""
